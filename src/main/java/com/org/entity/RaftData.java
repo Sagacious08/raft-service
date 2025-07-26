@@ -23,6 +23,8 @@ public class RaftData {
     private Integer id;
     private String code;
     private String rname;
+    private String description;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -41,4 +43,11 @@ public class RaftData {
 	public void setRname(String rname) {
 		this.rname = rname;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }
