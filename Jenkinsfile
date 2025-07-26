@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     triggers {
-        pollSCM('H/2 * * * *') // every 2 minutes
+        pollSCM('H/2 * * * *') // Check Git every 2 mins
     }
 
     environment {
@@ -19,20 +19,20 @@ pipeline {
 
         stage('Build JAR') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t $IMAGE_NAME ."
+                bat "docker build -t %IMAGE_NAME% ."
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh "docker rm -f $CONTAINER_NAME || true"
-                sh "docker run -d -p 8080:8080 --name $CONTAINER_NAME $IMAGE_NAME"
+                bat "docker rm -f %CONTAINER_NAME% || exit 0"
+                bat "docker run -d -p 8080:8080 --name %CONTAINER_NAME% %IMAGE_NAME%"
             }
         }
     }
